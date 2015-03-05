@@ -8,7 +8,6 @@ jrobens@interlated.com.au 201503
 
 */
 
-
 function SwiperManager() {
     this.swiper = null;
     this.delta = 0;
@@ -119,9 +118,15 @@ SwiperManager.prototype.scrollDown = function (e) {
         setTimeout(function () {
             window.swiperManager.setNotTransitioning();
         }, window.swiperManager.slideSpeed);
+
+        try {
+            window.swiperManager.atEnd();
+        } catch (err) {
+            // We are at the end. Otherwise we have to do 2 swipes on mobile.
+            window.swiperManager.hasMouseWheelControl = false;
+        }
     }
 };
-
 
 SwiperManager.prototype.goingUp = function () {
     // Let the exceptions go through.
